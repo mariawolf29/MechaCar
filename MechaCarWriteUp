@@ -1,0 +1,159 @@
+==============================================================
+# INTERPRETATION OF THE MULTIPLE LINEAR REGRESSION RESULTS:
+==============================================================
+
+Multiple linear regression model:
+mpg = 6.143*vehicle length + 0.056*spoiler angle + 3.566*ground clearance -3.567*AWD - 93.881
+
+6.143, 0.056, 3.566 and -3.567 are regression coefficients. Regression coefficient in multiple regression is the slope of the linear relationship between the criterion variable and the part of a predictor variable that is independent of all other predictor variables.
+
+Multiple R-squared:  
+R-squared=0.6937 
+R-squared represents the correlation coef. between the observed values of the dependent variable and the predicted values of dependent variable, range from 0 to 1. R-squared=0.6937 tells us that 69.37% of the variance in the measure of mpg can be predicted by vehicle length, spoiler angle, ground clearance and AWD.
+
+p-value:
+p-value = 4.541e-11  
+p value less than 0.05 indicate that overall model is significant, with p-value 4.541e-11 we can say that our model is highly significant, which means that at least one of the independent variables is significantly related to the dependent variable
+
+individual p-values:
+To determine which variables provide a significant contribution to the linear model we look at the individual p-values. According to our results, vehicle length and ground clearance (as well as intercept) are statistically unlikely to provide random amounts of variance to the linear model. In other words the vehicle length and ground clearance have a significant impact on mpg. When an intercept is statistically significant, it means there are other variables and factors that contribute to the variation in mpg that have not been included in our model. These variables may or may not be within our data set and may still need to be collected or observed.
+
+Coefficients:
+       (Intercept)    `vehicle length`     `spoiler angle`  
+           -93.881               6.143               0.056  
+`ground clearance`                 AWD  
+             3.566              -3.567 
+             
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)        -93.88092   15.20449  -6.175 1.72e-07 ***
+`vehicle length`     6.14265    0.66792   9.197 6.70e-12 ***
+`spoiler angle`      0.05600    0.06779   0.826    0.413    
+`ground clearance`   3.56565    0.55453   6.430 7.16e-08 ***
+AWD                 -3.56669    2.59622  -1.374    0.176    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8.993 on 45 degrees of freedom
+Multiple R-squared:  0.6937,	Adjusted R-squared:  0.6665 
+F-statistic: 25.48 on 4 and 45 DF,  p-value: 4.541e-11
+
+======================================
+# SUSPENSION COIL SUMMARY:
+======================================
+
+The design specifications for the MechaCar suspension coils dictate that the variance of the suspension coils must not exceed 100 pounds per inch. Does the current manufacturing data meet this design specification? Why or why not?
+ 
+The variance is a numerical measure of dispersion in a data set, how the data values are dispersed around the mean. A small variance indicates that the data points tend to be very close to the mean, and to each other. A high variance indicates that the data points are very spread out from the mean. Variance of the PSI is 76.23459 and coefficient of variation is 0.58% which is very low. We can say that the current manufacturing data meet this design specification. 
+
+Summary statistics table:
+
+✓ Mean
+> mean(suspension_coil$PSI)
+[1] 1499.531
+
+✓ Median
+> median(suspension_coil$PSI)
+[1] 1499.747
+
+✓ Variance
+> var(suspension_coil$PSI)
+[1] 76.23459
+
+✓ Standard deviation
+> sd(suspension_coil$PSI)
+[1] 8.731242
+> sqrt(var(suspension_coil$PSI))
+[1] 8.731242
+
+✓ Coefficient of variation, as percent
+> Coeff.Variation
+[1] 0.5822649
+
+=======================================
+# SUSPENSION COIL T-TEST:
+=======================================
+
+To determine if the suspension coil’s pound-per-inch results are statistically different from the mean population results of 1,500 pounds per inch, I will use One-sample t-test.
+One-sample t-test will answer if there is a statistical difference between the mean of the sample distribution and the mean of the population distribution.
+
+Hypotheses:
+
+H0 : There is no statistical difference between the observed sample mean and its presumed population mean
+Ha : There is a statistical difference between the observed sample mean and its presumed population mean.
+
+Five assumptions about our input data:
+
+- The input data is numerical and continuous. This is because we are testing the distribution of two datasets.
+- The sample data was selected randomly from its population data.
+- The input data is considered to be normally distributed.
+- The sample size is reasonably large. Generally speaking, this means that the sample data distribution should be similar to its population data distribution.
+- The variance of the input data should be very similar.
+- Qualitative test for Normality to visually asses the distribution of the data shows  the characteristic bell curve shape across the distribution. (geom_density() function)
+
+Our p-value is 0.5117, assuming the significance level was 0.05 percent then the p-value is above the significance  level and we do not have sufficient evidence to reject the null hypotesis and we could state that the sample and population means are statistically similar.
+
+t.test(suspension_coil$PSI,mu=1500)
+
+	One Sample t-test
+
+data:  suspension_coil$PSI
+t = -0.65784, df = 149, p-value = 0.5117
+alternative hypothesis: true mean is not equal to 1500
+95 percent confidence interval:
+ 1498.122 1500.940
+sample estimates:
+mean of x 
+ 1499.531
+ 
+==============================
+# DESIGN YOUR OWN STUDY:
+==============================
+
+Consumer interest:
+------------------
+
+To outperform the Mechacar competition we have to identify who our customers are and what they expect from a car, few examples:
+- fuel efficiency
+- features (backup camera, GPS, iOS and Android apps, etc.)
+- size
+- cargo capacity
+- vehicle class (city or country car)
+- cost
+- color
+- post trade services
+
+What question we would ask:
+---------------------------
+
+- Mechacar fuel efficiency vs. population fuel efficiency, is there a statistical difference?
+We can answer it with one-sample t-test
+H0 : There is no statistical difference between the Mechacar mean and its presumed population mean.
+Ha : There is a statistical difference between the Mechacar mean and its presumed population mean.
+
+- How is the fuel efficiency affected by size, cargo capacity, type of car (city or country car)?
+We can use Multiple linear regression, how much variance in the fuel efficiency is accounted for in a linear combination of independent variables.
+
+- Compare the means of Mechacar cost and Mechacar's biggest competitor cost:
+We can use two-sample t-Test
+H0 : There is no statistical difference between the two means (Mechacar and Mechacar's biggest competitor)
+Ha : There is a statistical difference between the two means (Mechacar and Mechacar's biggest competitor)
+
+- Is there a fuel efficiency based on vehicle class?
+We can use one-way ANOVA test
+H0 : The means of all groups are equal, or µ1 = µ2 = … = µn.
+Ha : At least one of the means is different from all other groups
+
+- To test the cost based on post trade services and vehicle features:
+We can use two-way ANOVA test
+H0 : The means of all groups are equal, or µ1 = µ2 = … = µn.
+Ha : At least one of the means is different from all other groups
+
+We need to collect data on the Mechacar biggest competitors and population data on the population as well.
+
+
+
+
+
+
+
